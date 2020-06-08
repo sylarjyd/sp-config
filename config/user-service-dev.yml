@@ -8,10 +8,16 @@ spring:
   cloud:
     config:
       override-none: true
-#server:
-#  port: 8101
+server:
+  port: 8101
 
 eureka:
   client:
     service-url:
       defaultZone: http://eureka1:2001/eureka, http://eureka2:2002/eureka, http://eureka3:2003/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
