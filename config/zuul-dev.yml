@@ -3,7 +3,7 @@ spring:
     name: zuul
   cloud:
     config:
-      override-none: false
+      override-none: true
 server:
   port: 3001
 
