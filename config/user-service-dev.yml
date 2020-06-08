@@ -8,6 +8,11 @@ spring:
   cloud:
     config:
       override-none: true
+  rabbitmq:
+    host: 172.16.20.174
+    port: 15672
+    username: test
+    password: test
 server:
   port: 8101
 
