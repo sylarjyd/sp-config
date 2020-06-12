@@ -6,12 +6,43 @@ spring:
   cloud:
     config:
       override-none: true
+  rabbitmq:
+    host: 172.16.20.174
+    port: 5672
+    username: test
+    password: test
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     url: jdbc:mysql://127.0.0.1:3307/springcloud?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     username: root
     password: 123456
+    druid:
+      initial-size: 5
+      min-idle: 5
+      maxActive: 20
+      maxWait: 60000
+      timeBetweenEvictionRunsMillis: 60000
+      minEvictableIdleTimeMillis: 300000
+      validationQuery: SELECT 1
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      filters: stat,wall,slf4j
+      connectionProperties: druid.stat.mergeSql\=true;druid.stat.slowSqlMillis\=5000
+      web-stat-filter:
+        enabled: true
+        url-pattern: "/*"
+        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
+      stat-view-servlet:
+        url-pattern: "/druid/*"
+        allow: 127.0.0.1,192.168.163.1
+        deny: 192.168.1.73
+        reset-enable: false
+        login-username: admin
+        login-password: 123456
 
   jpa:
     database: MYSQL
@@ -24,11 +55,6 @@ spring:
       hibernate:
         hbm2ddl:
       format_sql: true
-  rabbitmq:
-    host: 172.16.20.174
-    port: 5672
-    username: test
-    password: test
 
 eureka:
   client:
