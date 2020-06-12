@@ -1,3 +1,5 @@
+server:
+  port: 3001
 spring:
   application:
     name: zuul
@@ -9,8 +11,6 @@ spring:
     port: 5672
     username: test
     password: test
-server:
-  port: 3001
 
 eureka:
   client:
