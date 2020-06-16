@@ -28,7 +28,11 @@ public class UserController {
 	@GetMapping("/{userId}/score")
 	public JsonResult addScore(
 			@PathVariable Integer userId, Integer score) {
-		userService.addScore(userId, score);
+		try {
+			userService.addScore(userId, score);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return JsonResult.ok(score);
 	}
 }

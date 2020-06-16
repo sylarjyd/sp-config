@@ -1,25 +1,46 @@
+server:
+  port: 3001
 spring:
   application:
     name: feign
-
-server:
-  port: 3001
+  cloud:
+    inetutils:
+      ignored-interfaces: # 忽略的网卡
+        - VM.*
+      preferred-networks: # 要是用的网卡的网段
+        - 192.168.10
 
 eureka:
   client:
     service-url:
       defaultZone: http://eureka1:2001/eureka, http://eureka2:2002/eureka, http://eureka3:2003/eureka
-
+  instance:
+    prefer-ip-address: true # 使用ip进行注册
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port} # 界面列表中显示的格式也显示ip
 ribbon:
-  ConnectTimeout: 1000
-  ReadTimeout: 1000
+  ConnectTimeout: 5000
+  ReadTimeout: 5000
 
 item-service:
   ribbon:
     MaxAutoRetries: 1
     MaxAutoRetriesNextServer: 2
-    ConnectTimeout: 1000
-    ReadTimeout: 500
+    ConnectTimeout: 5000
+    ReadTimeout: 5000
+
+user-service:
+  ribbon:
+    MaxAutoRetries: 1
+    MaxAutoRetriesNextServer: 2
+    ConnectTimeout: 5000
+    ReadTimeout: 5000
+
+order-service:
+  ribbon:
+    MaxAutoRetries: 1
+    MaxAutoRetriesNextServer: 2
+    ConnectTimeout: 5000
+    ReadTimeout: 5000
 
 feign:
     hystrix:
@@ -30,7 +51,7 @@ hystrix:
         execution:
           isolation:
             thread:
-              timeoutInMilliseconds: 500
+              timeoutInMilliseconds: 5000
 
 management:
     endpoints:

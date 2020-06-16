@@ -1,7 +1,12 @@
 spring:
   application:
     name: hystrix
-
+  cloud:
+    inetutils:
+      ignored-interfaces: # 忽略的网卡
+        - VM.*
+      preferred-networks: # 要是用的网卡的网段
+        - 192.168.10
 server:
   port: 3001
 
@@ -9,6 +14,9 @@ eureka:
   client:
     service-url:
       defaultZone: http://eureka1:2001/eureka, http://eureka2:2002/eureka, http://eureka3:2003/eureka
+  instance:
+    prefer-ip-address: true # 使用ip进行注册
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port} # 界面列表中显示的格式也显示ip
 ribbon:
   MaxAutoRetriesNextServer: 2
   MaxAutoRetries: 1

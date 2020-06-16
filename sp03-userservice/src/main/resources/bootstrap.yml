@@ -6,8 +6,37 @@ spring:
         service-id: config-server
       name: user-service
       profile: dev
-
+    inetutils:
+      ignored-interfaces: # 忽略的网卡
+        - VM.*
+      preferred-networks: # 要是用的网卡的网段
+        - 192.168.10
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
 eureka:
   client:
     service-url:
       defaultZone: http://eureka1:2001/eureka, http://eureka2:2002/eureka, http://eureka3:2003/eureka
+  instance:
+      prefer-ip-address: true # 使用ip进行注册
+      instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port} # 界面列表中显示的格式也显示ip
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream
+
+tx-lcn:
+  ribbon:
+    loadbalancer:
+      dtx:
+        enabled: true
+  logger:
+    enabled: true
+    driver-class-name: com.mysql.jdbc.Driver
+    jdbc-url: jdbc:mysql://127.0.0.1:3307/tx-manager?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    username: root
+    password: 123456
