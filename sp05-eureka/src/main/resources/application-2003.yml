@@ -12,7 +12,7 @@ server:
 
 eureka:
   server:
-    enable-self-preservation: false
+    enable-self-preservation: true
   instance:
     hostname: eureka3
     prefer-ip-address: true # 使用ip进行注册

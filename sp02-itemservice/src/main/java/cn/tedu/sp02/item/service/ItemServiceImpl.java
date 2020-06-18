@@ -34,12 +34,16 @@ public class ItemServiceImpl implements ItemService {
 	@LcnTransaction(propagation = DTXPropagation.REQUIRED) //分布式事务注解
 	@Transactional
 	@Override
-	public void decreaseNumbers(List<Item> list){
+	public int decreaseNumbers(List<Item> list){
 		for(Item item : list) {
 			log.info("减少库存 - "+item);
 			Integer id = item.getId();
 			Integer number = item.getNumber();
-			itemDao.decreaseNumbers(id,number);
+			int i = itemDao.decreaseNumbers(id, number);
+			if(i==0){
+				return i;
+			}
 		}
+		return 1;
 	}
 }

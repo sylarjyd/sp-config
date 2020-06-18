@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface ItemDao extends JpaRepository<ItemPojo,Integer> {
 
     @Modifying
-    @Query(value = "update item_info set number = number - ?2 where id = ?1", nativeQuery = true)
+    @Query(value = "update item_info set number = number - ?2 where id = ?1 and (number - ?2)>=0", nativeQuery = true)
     public int decreaseNumbers(Integer id, Integer number);
 }

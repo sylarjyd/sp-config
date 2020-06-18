@@ -29,9 +29,13 @@ public class UserController {
 	public JsonResult addScore(
 			@PathVariable Integer userId, Integer score) {
 		try {
-			userService.addScore(userId, score);
+			int i = userService.addScore(userId, score);
+			if(i==0){
+				return JsonResult.err("增加积分失效！");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			return JsonResult.err();
 		}
 		return JsonResult.ok(score);
 	}

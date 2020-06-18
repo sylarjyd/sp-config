@@ -52,11 +52,17 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public void addOrder(Order order) {
 		//调用item-service减少商品库存
-		itemService.decreaseNumber(order.getItems());
+		JsonResult jsonResult1 = itemService.decreaseNumber(order.getItems());
+		if(jsonResult1.getCode()!=200){
+			throw new RuntimeException("库存扣减失败！");
+		}
 
 		Integer userid = order.getUser().getId();
 		//调用user-service增加用户积分
-		userService.addScore(userid, 100);
+		JsonResult jsonResult = userService.addScore(userid, 100);
+		if(jsonResult.getCode()!=200){
+			throw new RuntimeException("积分增加失败！");
+		}
 
 		log.info("保存订单："+order);
 		List<Item> items = order.getItems();
@@ -72,7 +78,7 @@ public class OrderServiceImpl implements OrderService {
 			orderPojos.add(orderPojo);
 		});
 		orderDao.saveAll(orderPojos);
-		int m = 1/0;
+//		int m = 1/0;
 	}
 
 }

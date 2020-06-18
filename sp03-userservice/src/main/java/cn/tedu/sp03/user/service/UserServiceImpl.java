@@ -43,11 +43,12 @@ public class UserServiceImpl implements UserService {
 	@LcnTransaction(propagation = DTXPropagation.REQUIRED) //分布式事务注解
 	@Transactional
 	@Override
-	public void addScore(Integer id, Integer score){
+	public int addScore(Integer id, Integer score){
 		// 这里增加积分
-		userDao.addScore(score,id);
+		int i = userDao.addScore(score, id);
 		log.info("user " + id + " - 增加积分 " + score);
 //		int m = 1/0;
+		return i;
 	}
 
 }
